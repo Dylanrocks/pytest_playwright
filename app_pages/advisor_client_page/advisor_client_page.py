@@ -78,8 +78,10 @@ class AdvisorClientPage(AdvisorMainPage):
         self.page.click(selector=self.BACK_BUTTON)
 
     def delete_client_id(self, reason: DeleteReason, reason_to_provide: str):
-        self.page.locator(selector=self.DELETE_CLIENT_BTN_LOCATOR).click()
+        self.page.click(selector=self.DELETE_CLIENT_BTN_LOCATOR)
+        self.page.wait_for_selector(selector=self.SUBMIT_BTN_LOCATOR)
         self.page.get_by_label(reason.value).click()
         self.page.get_by_label(reason.value).click()
         self.page.get_by_role("textbox").fill(reason_to_provide)
         self.page.click(selector=self.SUBMIT_BTN_LOCATOR)
+        self.page.wait_for_timeout(timeout=3000)
